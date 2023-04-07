@@ -5,9 +5,9 @@
 
 # emailGPT
 
-`emailGPT` is a quick and easy interface to generate emails with [ChatGPT](https://openai.com/blog/chatgpt/). To try it out, click the "Open in Streamlit" button above, or click [here](https://lucasmccabe-emailgpt-app-jspyxu.streamlit.app/).
+`emailGPT` is a quick and easy interface to generate emails with [ChatGPT](https://openai.com/blog/chatgpt/). 
+This fork use OpenAI API directly instead of using revChatGPT.
 
-> Note: This Streamlit app is no longer functional, after OpenAI added Cloudflare protections to their API (12/12/2022)
 
 <img src="assets/lazy_email.png" alt="drawing" width="200"/>
 
@@ -37,15 +37,26 @@
 
 ## Installation
 
-If you're using the [`Streamlit`](https://lucasmccabe-emailgpt-app-jspyxu.streamlit.app/) app, no installation is necessary. Otherwise:
 
-##### Installation via GitHub
-Clone the repo from [here](https://github.com/lucasmccabe/emailGPT) (this repo).
-
-Install requirements:
+1. Install requirements:
 ```bash
 pip install -r requirements.txt
 ```
+2. Export API KEY 
+
+Generate your API KEY using platform.openai.com and make it our environment variable 
+
+```
+export OPENAI_API_KEY=<YOUR-OPENAI-API-KEY> 
+```
+
+3. Run streamlit on your local machine 
+
+```
+streamlit run app.py
+
+```
+
 
 ## Contact
 
