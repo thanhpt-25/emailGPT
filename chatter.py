@@ -22,7 +22,7 @@ class Chatter:
           model="text-davinci-003",
           prompt=prompt,
           temperature=0.7,
-          max_tokens=256,
+          max_tokens=1024,
           top_p=1,
           frequency_penalty=0,
           presence_penalty=0
@@ -44,23 +44,51 @@ class Chatter:
                 "tone": tone,
             }
         """
-        prompt = "An example of ".format(tone=job["tone"])
+        if job["no_emails"] in ["2", "3"]:
+            prompt = "Write %s examples " % job["no_emails"]
+        else:
+            prompt = "Write an example "
+        prompt += "of ".format(tone=job["tone"])
 
         if job["tone"] in ["excited", "angry"]:
-            prompt += "an %s email " % job["tone"]
+            prompt += "an %s newsletter " % job["tone"]
         elif job["tone"] in ["happy", "sad"]:
-            prompt += "a %s email " % job["tone"]
-        else:  # includes "neutral"
-            prompt += "an email "
-        if job["sender"] != "":
-            prompt += "from %s " % job["sender"]
-        if job["recipient"] != "":
-            prompt += "to %s " % job["recipient"]
-        if job["subject"] != "":
-            prompt += "with the subject line '%s' " % job["subject"]
-        if job["topic"] != "":
-            prompt += "about %s " % job["topic"]
+            prompt += "a %s newsletter  " % job["tone"]
+        else:  # includes "newsletter"
+            prompt += "an newsletter "
 
+        if job["no_emails"] in ["2", "3"]:
+            prompt += "emails "
+        else:
+            prompt += "email "
+
+        if job["max_length"] != "":
+            prompt += "with no more than %s characters " % job["max_length"]
+
+        if job["language"] == "日本語":
+            prompt += "in %s " % "japanese"
+        else:
+            
+            prompt += "in %s " % "english"
+
+        if job["sender_attr"] == "30代女性":
+            prompt += "from %s " % "a female in her 30s "
+        elif job["sender_attr"] == "40代女性":
+            prompt += "from %s " % "a female in her 40s "
+        else:
+            prompt += "from %s " % "a female in her 50s "
+
+        if job["receiver_attr"] == "30代女性":
+            prompt += "to a target who is %s " % "a female in her 30s."
+        elif job["receiver_attr"] == "40代女性":
+            prompt += "to a target who is %s " % "a female in her 40s."
+        else:
+            prompt += "to a target who is %s " % "a female in her 50s."
+
+        if job["subject"] != "":
+            prompt += "The email must has the subject line '%s' " % job["subject"]
+        if job["theme"] != "":
+            prompt += "and its content theme is about '%s' ." % job["theme"]
         while prompt[-1] == " ":
             prompt = prompt[:-1]
         return prompt
@@ -81,5 +109,5 @@ class Chatter:
             }
         """
         prompt = self.parse_job(job)
-        message = self.get_response(prompt)
-        return message
+        # message = self.get_response(prompt)
+        return prompt
